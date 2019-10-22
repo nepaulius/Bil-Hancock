@@ -3,30 +3,20 @@
 
 #include "Transaction_data.h"
 
+
 class Block{
-    private:
-        int index;
-        std::string block_hash;
-        std::string previous_hash;
-        std::string generate_hash();
+public:
+    std::string block_hash;
+    std::string previous_hash;
+    std::string merkel;
+    time_t start;
+    std::vector<Transaction_data> data;
+    int nonce;
+    std::string default_target;
+    Block(std::string hashblock,std::string hashprevious,std::string merkel_,time_t start_,std::vector<Transaction_data> full, int nonce_,std::string default_target_);
 
 
-
-    public:
-        Block(int idx, std::vector<Transaction_data> full, std::string prev_hash,std::string merkel_root);
-
-        int get_index();
-        std::string get_hash();
-        std::string get_previous_hash();
-
-
-        std::vector<Transaction_data> pilnas;
-        std::string merkel;
-        Transaction_data data;
-
-        bool is_hash_valid();
 
 };
-
 
 #endif // BLOCK_H_INCLUDED

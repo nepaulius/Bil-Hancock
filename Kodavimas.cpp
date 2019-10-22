@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <string>
 
-char genRandom3(int keist)
+char genRandom2(int keist)
 {
 
 
@@ -88,7 +88,7 @@ std::string kardinalus_pokyciai(std::string tekstas)
         for(int k=0;k<KO.size();k++)
     {
 
-tikr+=genRandom3((KO[k]+golas)*int(hashas.back()));
+tikr+=genRandom2((KO[k]+golas)*int(hashas.back()));
     }
 
     return tikr;
