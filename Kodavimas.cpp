@@ -16,6 +16,7 @@ char genRandom2(int keist)
 }
 std::string kardinalus_pokyciai(std::string tekstas)
 {
+
     std::string pagrindas="!!!!!!!!!!!!!!!!!!";
     long long int raideliuSriuba=0;
 
