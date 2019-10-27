@@ -13,6 +13,7 @@ class User{
  std::string vardas;
  std::string public_key;
  int kiekis;
+
 };
 
 std::vector<User> generate_vartot()
@@ -39,12 +40,14 @@ std::vector<Transaction_data> generate_vartot_transac(std::vector<User> visi)
  std::string tdata_hash;
  std::vector<Transaction_data>data_transac;
 
+ std::string pakeistas;
+
     int nuo_ko;
     int kam;
-    for(int j=0;j<10000;j++)
+    for(int j=0;j<2000;j++)
     {
         long long int  now = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-        std::uniform_int_distribution<std::mt19937::result_type> dead_presidents(100,100000);
+        std::uniform_int_distribution<std::mt19937::result_type> dead_presidents(0,100000);
         int amount=dead_presidents(mt);
 
 
@@ -54,18 +57,16 @@ std::vector<Transaction_data> generate_vartot_transac(std::vector<User> visi)
         kam=rand()%visi.size();
 
 
-        if(nuo_ko!=kam && visi[nuo_ko].kiekis-amount>=0)
+        if(nuo_ko!=kam)
         break;
         }
-
-
 
         tdata_hash=kardinalus_pokyciai(std::to_string(amount)+visi[nuo_ko].vardas+visi[kam].vardas+std::to_string(now));
 
         Transaction_data duom(amount,visi[nuo_ko].vardas,visi[kam].vardas,now,tdata_hash);
-      //  std::cout<<duom.send_key<<" -> "<<duom.receive_key<<" "<<duom.amount<<" "<<" "<<duom.timestamp<<" "<<duom.thash<<" "<<std::endl;
         data_transac.push_back(duom);
 
+        pakeistas=std::to_string(amount);
 
         visi[nuo_ko].kiekis=visi[nuo_ko].kiekis-amount;
         visi[kam].kiekis=visi[kam].kiekis+amount;
@@ -75,4 +76,39 @@ std::vector<Transaction_data> generate_vartot_transac(std::vector<User> visi)
 
     return data_transac;
 
+}
+std::vector<Transaction_data>find_only_gut_transactions(std::vector<Transaction_data> all,std::vector<User>&users)
+{
+    for(int i=0;i<all.size();i++)
+    {
+        for(int j=0;j<users.size();j++)
+        {
+            if(all[i].send_key==users[j].vardas && users[j].kiekis-all[i].amount<0)
+            {
+
+                all.erase(all.begin()+i);
+                i--;
+                break;
+
+
+            }
+
+            else if(all[i].send_key==users[j].vardas && users[j].kiekis-all[i].amount>=0)
+
+            {
+
+                users[j].kiekis=users[j].kiekis-all[i].amount;
+                for(int k=0;k<users.size();k++)
+                {
+                    if(all[i].receive_key==users[k].vardas)
+                    {
+                        users[k].kiekis=users[k].kiekis+all[i].amount;
+                    }
+                }
+
+            }
+
+        }
+    }
+    return all;
 }

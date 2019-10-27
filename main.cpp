@@ -24,25 +24,11 @@ int main()
 
     std::vector<Transaction_data>vartot_transac=generate_vartot_transac(visi_vart);
 
-    Blocks_maker(vartot_transac);
+    std::vector<Transaction_data>gut_transactions=find_only_gut_transactions(vartot_transac,visi_vart);
 
-/*
-    std::vector<Transaction_data> temp_vartot_transac;
-
-
-    for(int i=0;i<vartot_transac.size();i++)
-    {
-        temp_vartot_transac.push_back(vartot_transac[i]);
-        if(temp_vartot_transac.size()==5)
-        {
-            What.addBlock(temp_vartot_transac);
-            temp_vartot_transac.clear();
-        }
+    Blocks_maker(gut_transactions);
 
 
-
-    }
-    */
 
 
     return 0;

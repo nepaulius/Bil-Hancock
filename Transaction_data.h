@@ -3,7 +3,7 @@
 
 struct Transaction_data{
 
-    double amount;
+    int amount;
     std::string send_key;
     std::string receive_key;
     long long int timestamp;

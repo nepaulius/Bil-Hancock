@@ -8,7 +8,7 @@ char genRandom2(int keist)
 {
 
 
-    char simboliai[] ="ABCDEF6789012345abcdefA";
+    char simboliai[] ="ABCDEF6789e12305abcd0f4";
     int iSecret;
     iSecret = keist%23;
 
